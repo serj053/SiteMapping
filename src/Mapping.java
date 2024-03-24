@@ -42,11 +42,12 @@ public class Mapping extends RecursiveTask<List<String>> {
             if (!isValid(link)) {//проверка соответствия щаблона и url
                 continue;
             }
-            Mapping finderLinks = new Mapping(link);//для каждой ссылки поток создается
-            finderLinks.fork();
-            tasks.add(finderLinks);
+//            Mapping finderLinks = new Mapping(link);//для каждой ссылки поток создается
+//            finderLinks.fork();
+//            tasks.add(finderLinks);
+            setLinks.add(link);
         }
-        addTaskResult(setLinks, tasks);
+//        addTaskResult(setLinks, tasks);
         return setLinks;
     }
 

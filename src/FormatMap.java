@@ -11,8 +11,9 @@ public class FormatMap {
         list.forEach(builder::append);
         String line = builder.toString();
         Files.write(Paths.get("data/primary.txt"), list);
-        String[] arr3 = line.split("[\\]\\[\\s\\,]");
-     //   Files.write(Paths.get("data/next.txt"), Arrays.asList(arr3));
+    //    String[] arr3 = line.split("[\\]\\[\\s\\,]");
+        String[] arr3 = list.toArray(new String[0]);
+        Files.write(Paths.get("data/next.txt"), Arrays.asList(arr3));
         List<String> listOut = new ArrayList<>();
         for (String str2 : arr3) {
             String string = str2.replace("[", "").replace("]", "");
