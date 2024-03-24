@@ -26,7 +26,7 @@ public class Mapping extends RecursiveTask<List<String>> {
         Set<String> tempList;
         setLinks.add(url);
         try {
-            Thread.sleep(200);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -39,10 +39,10 @@ public class Mapping extends RecursiveTask<List<String>> {
             return setLinks;
         }
         for (String link : tempList) {
-            if (!isValid(link)) {
+            if (!isValid(link)) {//проверка соответствия щаблона и url
                 continue;
             }
-            Mapping finderLinks = new Mapping(link);
+            Mapping finderLinks = new Mapping(link);//для каждой ссылки поток создается
             finderLinks.fork();
             tasks.add(finderLinks);
         }
@@ -54,9 +54,8 @@ public class Mapping extends RecursiveTask<List<String>> {
         for (Mapping link : tasks) {
             set.add(link.join().toString());
         }
-
     }
-
+//получаем список ссылок
     public Set<String> getLinksFromPage() throws IOException {
         Document doc = Jsoup.connect(url).ignoreHttpErrors(true).get();
         Elements elements = doc.select("a[abs:href]");
@@ -64,7 +63,7 @@ public class Mapping extends RecursiveTask<List<String>> {
         elements.forEach(elem -> links.add(elem.attr("abs:href")));
         return links;
     }
-
+//regex-шаблон, test-проверяемый url-адрес, url-главная часть адреса
     public boolean isValid(String test) {
         boolean bl = Pattern.matches(regex, test) && test.contains(url)
                 && !test.equals(url) && !url.contains("pdf");
