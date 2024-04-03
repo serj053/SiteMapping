@@ -10,13 +10,11 @@ public class MappingTest {
         long start = System.currentTimeMillis();
         int cores = Runtime.getRuntime().availableProcessors();
         ForkJoinPool pool = new ForkJoinPool(cores);
-     //   String url = "https://www.playback.ru";
+        // String url = "https://www.playback.ru";
         String url = "https://lenta.ru/";
         Mapping linksFinder = new Mapping(url);
-        pool.execute(linksFinder);
-        List<String> links = linksFinder.compute();
- //       links.forEach(System.out::println);
-        System.out.println("links.size()  "+links.size());
+        pool.invoke(linksFinder);
+        List<String> links = linksFinder.join();
         Files.write(Path.of("data/map.html"), FormatMap.toDo(links));
         int n = 0;
         for (String str : FormatMap.toDo(links)) {
