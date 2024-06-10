@@ -36,14 +36,15 @@ public class Mapping extends RecursiveTask<List<String>> {
             throw new RuntimeException(e);
         }
         if (tempList.isEmpty()) {
-            return setLinks;
+            return setLinks;//если список пустой, то выходим из метода и набор задач заканчивается
         }
         for (String link : tempList) {
             if (!isValid(link)) {
                 continue;
             }
             Mapping finderLinks = new Mapping(link);
-            finderLinks.fork();
+            finderLinks.fork();//передает вызывающую задачу для асинхронного выполнения
+            //и возвращает this как только задача будет запланирована для выполнения
             tasks.add(finderLinks);
         }
         addTaskResult(setLinks, tasks);
