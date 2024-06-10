@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.RecursiveTask;
 import java.util.regex.Pattern;
-
+//готовим рад задач для выполнения в потоке
 public class Mapping extends RecursiveTask<List<String>> {
     String url;
     private final String regex = "^(https?|ftp|file)://[-a-zA-Z0-9+&@/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
@@ -26,7 +26,7 @@ public class Mapping extends RecursiveTask<List<String>> {
         Set<String> tempList;
         setLinks.add(url);
         try {
-            Thread.sleep(200);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

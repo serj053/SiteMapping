@@ -12,6 +12,7 @@ public class MappingTest {
         String url = "https://lenta.ru";
         Mapping linksFinder = new Mapping(url);
         pool.execute(linksFinder);
+        //вызов метода join() заставляет поток ждать выполнения задачи для которой он вызван
         List<String> links = linksFinder.join();
         Files.write(Path.of("data/map.html"), FormatMap.toDo(links));
 
