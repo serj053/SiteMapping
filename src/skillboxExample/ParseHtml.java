@@ -16,10 +16,14 @@ import static java.lang.Thread.sleep;
 // внутри того же домена
 public class ParseHtml {
     public static void main(String[] args) {
+        /*
+        https://bookofthedead.pu710ev.com/?lang=ru&st=kFTF1179&s1=&s2=what_max_cas2022_ru_0103&s3=&s4=&s5=&pc=30&form_phone=%7Bform_phone%7D&form_email=%7Bform_email%7D&lrrPath=casino&trId=co6fla3ieqp81m7m7jfg&source=&startTime=1712126632911419463
+        */
         ConcurrentSkipListSet list = ParseHtml.getLinks("https://skillbox.ru/");
         list.forEach(System.out::println);
         System.out.println(list.size());
     }
+
     //Позволяет безопасно выполнять операции вставки, удаления
     // и доступа к множеству одновременно несколькими потоками.
     private static ConcurrentSkipListSet<String> links;
@@ -60,7 +64,7 @@ public class ParseHtml {
                     .ignoreHttpErrors(true)//игнорировать ошибки HTTP, которые могут возникнуть
                     // при попытке получить данные по URL-адресу, то есть извлекать информацию из
                     // страницы даже в случае возникновения ошибки HTTP
-                     //.timeout(100)//Метод timeout() библиотеки Jsoup время ожидания для подключения
+                    //.timeout(100)//Метод timeout() библиотеки Jsoup время ожидания для подключения
                     // к серверу
                     .followRedirects(false);//избегать зацикливания при обработке перенаправлений
             Document document = connection.get();

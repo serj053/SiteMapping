@@ -1,14 +1,14 @@
-package siteparsing;
+package siteParsing;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class SiteMap {
-    private CopyOnWriteArrayList<SiteMap> list;
+    private final CopyOnWriteArrayList<SiteMap> list = new CopyOnWriteArrayList<>();
     private final String url;
     public SiteMap(String url){
         this.url = url;
     }
-    public void addUrl(String url){
+    public void addSiteMap(String url){
         list.add(new SiteMap(url));
     }
     public CopyOnWriteArrayList<SiteMap> getSiteMaps(){

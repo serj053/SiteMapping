@@ -31,23 +31,23 @@ public class Mapping extends RecursiveTask<List<String>> {
             throw new RuntimeException(e);
         }
         try {
-            tempList = getLinksFromPage();
+            tempList = getLinksFromPage();//получили набор url адресов
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        if (tempList.isEmpty()) {
+        if (tempList.isEmpty()) {//если набор пустой то выходим из метода
             return setLinks;
         }
-        for (String link : tempList) {
+        for (String link : tempList) {//проверяем каждый элеиент набора
             if (!isValid(link)) {//проверка соответствия щаблона и url
                 continue;
             }
-//            Mapping finderLinks = new Mapping(link);//для каждой ссылки поток создается
-//            finderLinks.fork();
-//            tasks.add(finderLinks);
+            Mapping finderLinks = new Mapping(link);//для каждой ссылки поток создается
+            finderLinks.fork();
+            tasks.add(finderLinks);
             setLinks.add(link);
         }
-//        addTaskResult(setLinks, tasks);
+        addTaskResult(setLinks, tasks);
         return setLinks;
     }
 

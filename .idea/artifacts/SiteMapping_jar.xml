@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="SiteMapping:jar">
+    <output-path>$PROJECT_DIR$/out/</output-path>
+    <root id="archive" name="SiteMapping.jar">
+      <element id="module-output" name="SiteMapping" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../material/jsoup-1.17.2.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

@@ -10,7 +10,7 @@ public class MappingTest {
         long start = System.currentTimeMillis();
         int cores = Runtime.getRuntime().availableProcessors();
         ForkJoinPool pool = new ForkJoinPool(cores);
-        // String url = "https://www.playback.ru";
+        //String url = "https://www.playback.ru";
         String url = "https://lenta.ru/";
         Mapping linksFinder = new Mapping(url);
         pool.invoke(linksFinder);

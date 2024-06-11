@@ -18,15 +18,18 @@ public class SiteMapRecursiveAction extends RecursiveAction {
     //рекурсивный обход сайта и его дочерних страниц
     @Override
     protected void compute() {
-        linksPool.add(siteMap.getUrl());//добавляем первым адрес страницы
+        if (!linksPool.contains(siteMap.getUrl()))
+            linksPool.add(siteMap.getUrl());//добавляем первым адрес страницы
         //кладем все ссылки по адресу страницы в контейнер
         ConcurrentSkipListSet<String> links = ParseHtml.getLinks(siteMap.getUrl());
         //если в контейнере для посещенных ссылок нет текущей ссылки то добавляем ее туда
-        //и кладем все ссылки в контейнер класса SiteMap
+        //и кладем все адреса соответствующие ссылкам в контейнер класса SiteMap
         for (String link : links) {
             if (!linksPool.contains(link)) {
                 linksPool.add(link);//добавляем в список посещенных ссылок
-                //по текущей ссылке создаем новый объект - пустую карту SiteMap `
+                //по текущей ссылке создаем новый объект - пустую карту SiteMap
+                //и добавляем туда базовую (начальную) ссылку, а сам объект добавляем
+                // в контейнер
                 siteMap.addChildren(new SiteMap(link));
             }
         }
@@ -40,11 +43,12 @@ public class SiteMapRecursiveAction extends RecursiveAction {
             //добавляем текущую хадачу в список запущенных задач
             taskList.add(task);
         }
-        //метод join() перебериает задачи и заствляем текущую задачу ждать пока
+        //метод join() перебериает задачи и заставляет текущую задачу ждать пока
         // кождая дочерняя звдвча  не закончит выполнение
         for (SiteMapRecursiveAction task : taskList) {
             task.join();
         }
+
     }
 }
 

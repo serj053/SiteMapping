@@ -3,7 +3,7 @@ package skillboxExample;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class SiteMap {
-    private String url; //адрес корневой страницы
+    private final String url; //адрес корневой страницы
     //использование CopyOnWriteArrayList позволяет менять этот ArrayList
     //параллельно несколькими потоками без блокировки
     private final CopyOnWriteArrayList<SiteMap> siteMapChildrens;
