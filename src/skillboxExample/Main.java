@@ -9,8 +9,9 @@ import java.util.concurrent.ForkJoinPool;
 
 public class Main {
     public static void main(String[] args) {
-        String url = "https://skillbox.ru/";
-        String pathToSiteMapFile = "data/siteMap.txt";
+        //String url = "https://skillbox.ru/";
+        String url = "https://www.playback.ru";
+        String pathToSiteMapFile = "data/playbackFromSkillbox.txt";
         //создаем пустой контейнер
         SiteMap siteMap = new SiteMap(url);
         //создаем задачу - создавать контейнеры SiteMap, передавать туда ссылки

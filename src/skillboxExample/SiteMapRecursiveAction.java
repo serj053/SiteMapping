@@ -19,7 +19,7 @@ public class SiteMapRecursiveAction extends RecursiveAction {
     @Override
     protected void compute() {
         if (!linksPool.contains(siteMap.getUrl()))
-            linksPool.add(siteMap.getUrl());//добавляем первым адрес страницы
+            linksPool.add(siteMap.getUrl());//добавляем первым адрес страницы (базовый url)
         //кладем все ссылки по адресу страницы в контейнер
         ConcurrentSkipListSet<String> links = ParseHtml.getLinks(siteMap.getUrl());
         //если в контейнере для посещенных ссылок нет текущей ссылки то добавляем ее туда
@@ -38,9 +38,9 @@ public class SiteMapRecursiveAction extends RecursiveAction {
         //для каждой ссылки внутри карты создаем свою задачу
         for (SiteMap child : siteMap.getSiteMapChildrens()) {
             SiteMapRecursiveAction task = new SiteMapRecursiveAction(child);
-            //запускаем новую задачу асинхронно относительно текущего потока
+            //запускаем(добавляем) новую задачу асинхронно относительно текущего потока
             task.fork();
-            //добавляем текущую хадачу в список запущенных задач
+            //добавляем текущую задачу в список подготовленных (запущенных?) задач
             taskList.add(task);
         }
         //метод join() перебериает задачи и заставляет текущую задачу ждать пока

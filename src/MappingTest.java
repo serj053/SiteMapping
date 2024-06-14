@@ -12,6 +12,7 @@ public class MappingTest {
         ForkJoinPool pool = new ForkJoinPool(cores);
         //String url = "https://www.playback.ru";
         String url = "https://lenta.ru/";
+        //String url = "https://skillbox.ru/";
         Mapping linksFinder = new Mapping(url);
         pool.invoke(linksFinder);
         List<String> links = linksFinder.join();

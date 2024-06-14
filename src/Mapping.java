@@ -26,7 +26,7 @@ public class Mapping extends RecursiveTask<List<String>> {
         Set<String> tempList;
         setLinks.add(url);
         try {
-            Thread.sleep(100);
+            Thread.sleep(300);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -35,7 +35,8 @@ public class Mapping extends RecursiveTask<List<String>> {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        if (tempList.isEmpty()) {//если набор пустой то выходим из метода
+        //если набор пустой то выходим из метода * граница рекурсии *
+        if (tempList.isEmpty()) {
             return setLinks;
         }
         for (String link : tempList) {//проверяем каждый элеиент набора
@@ -43,7 +44,7 @@ public class Mapping extends RecursiveTask<List<String>> {
                 continue;
             }
             Mapping finderLinks = new Mapping(link);//для каждой ссылки поток создается
-            finderLinks.fork();
+            finderLinks.fork();//запуск на выполнение нового потока
             tasks.add(finderLinks);
             setLinks.add(link);
         }
