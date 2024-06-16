@@ -31,8 +31,9 @@ public class ParseHtml {
     //реализуем метод который проверяет является ли строка URL
     //адресом внутри домена сайта
     private static boolean isLink(String link) {
-        //String regex = "http[s]?://[^#,\\s]*\\.?skillbox\\.ru[^#,\\s]*";
-        String regex = "http[s]?://[^#,\\s]*\\.?playback\\.ru[^#,\\s]*";
+        String regex = "http[s]?://[^#,\\s]*\\.?skillbox\\.ru[^#,\\s]*";
+       // String regex = "http[s]?://[^#,\\s]*\\.?playback\\.ru[^#,\\s]*";
+        //String regex = "(?:https?):\\/\\/(\\w+:?\\w*)?(\\S+)(:\\d+)?(\\/|\\/([\\w#!:.?+=&%!\\-\\/]))?";//*
         //String regex = "^(https?|ftp|file)://[-a-zA-Z0-9+&@/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
         return link.matches(regex);
     }
@@ -60,14 +61,15 @@ public class ParseHtml {
     public static ConcurrentSkipListSet<String> getLinks(String url) {
         links = new ConcurrentSkipListSet<>();
         try {
-            sleep(250);//выдерживать паузы между потоками (с помощью метода sleep() у потока),
-            // чтобы сайт не заблокировал доступ приложения
+            sleep(250);//выдерживать паузы между потоками обращения к этому статическому методу
+            // (с помощью метода sleep() у потока), (чтобы сайт не заблокировал доступ приложения ?)
             Connection connection = Jsoup.connect(url)
                     .ignoreHttpErrors(true)//игнорировать ошибки HTTP, которые могут возникнуть
                     // при попытке получить данные по URL-адресу, то есть извлекать информацию из
                     // страницы даже в случае возникновения ошибки HTTP
                     //.timeout(100)//Метод timeout() библиотеки Jsoup время ожидания для подключения
                     // к серверу
+                    .ignoreContentType(true)//игнорироватьтип содеожимого документа при анализе
                     .followRedirects(false);//избегать зацикливания при обработке перенаправлений
             Document document = connection.get();
             Elements elements = document.select("body").select("a");//здесь может быть пусто.
@@ -84,7 +86,15 @@ public class ParseHtml {
         } catch (IOException e) {
             System.out.println(e + " " + url);
         }
-        //если ссылок на странице нет товернется пустой контейнер
+        //если ссылок на странице нет то вернется пустой контейнер
         return links;
     }
 }
+/* ignoreContentType(true)
+* Игнорируйте тип содержимого документа при анализе ответа. По умолчанию это значение равно false,
+*  нераспознанный тип содержимого приведет к возникновению исключения IOException.
+*  (Это делается для предотвращения создания мусора при попытке анализа двоичного изображения в
+* формате JPEG, например.) Установите значение true, чтобы принудительно выполнить попытку
+* синтаксического анализа независимо от типа контента.
+*
+* */

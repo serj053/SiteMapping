@@ -9,9 +9,11 @@ import java.util.concurrent.ForkJoinPool;
 
 public class Main {
     public static void main(String[] args) {
-        //String url = "https://skillbox.ru/";
-        String url = "https://www.playback.ru";
-        String pathToSiteMapFile = "data/playbackFromSkillbox.txt";
+        String url = "https://skillbox.ru/";
+        String pathToSiteMapFile = "data/siteMap.txt";
+//        String url = "https://www.playback.ru";
+//        String pathToSiteMapFile = "data/playbackFromSkillbox.txt";
+        long start = System.currentTimeMillis();
         //создаем пустой контейнер
         SiteMap siteMap = new SiteMap(url);
         //создаем задачу - создавать контейнеры SiteMap, передавать туда ссылки
@@ -36,6 +38,8 @@ public class Main {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        long finish = System.currentTimeMillis() - start;
+        System.out.println("* full time - " + finish/1000+ " sec");
 
     }
 
