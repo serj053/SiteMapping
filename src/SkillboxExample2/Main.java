@@ -2,13 +2,14 @@ package SkillboxExample2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ForkJoinPool;
 
 public class Main {
     public static void main(String[] args) {
         ForkJoinPool fjp = new ForkJoinPool(Runtime.getRuntime().availableProcessors());
-        CopyOnWriteArrayList<String> urlPool = new CopyOnWriteArrayList<>();
+        ConcurrentSkipListSet<String> urlPool = new ConcurrentSkipListSet<>();
         String url = "https://skillbox.ru";
         long start = System.currentTimeMillis();
         Mapping.constantPart = getConstantPart(url);

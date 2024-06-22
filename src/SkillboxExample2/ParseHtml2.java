@@ -9,6 +9,8 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 import static java.lang.Thread.sleep;
@@ -28,7 +30,7 @@ public class ParseHtml2 {
 
     //Позволяет безопасно выполнять операции вставки, удаления
     // и доступа к множеству одновременно несколькими потоками.
-    private  ArrayList<String> links;
+    private  ConcurrentSkipListSet<String> links;
 
     //реализуем метод который проверяет является ли строка URL
     //адресом внутри домена сайта
@@ -61,8 +63,8 @@ public class ParseHtml2 {
     // потокобезопасную реализацию структуры данных "список уникальных элементов
     // отсортированных по возрастанию"
     //собираем все ссылки со страницы
-    public ArrayList<String> getLinks(String url, String constantPart) {
-        links = new ArrayList<>();
+    public ConcurrentSkipListSet<String> getLinks(String url, String constantPart) {
+        links = new ConcurrentSkipListSet<>();
         try {
             sleep(150);//выдерживать паузы между потоками обращения к этому статическому методу
             // (с помощью метода sleep() у потока), (чтобы сайт не заблокировал доступ приложения ?)

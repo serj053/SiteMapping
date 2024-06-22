@@ -9,17 +9,17 @@ import java.util.logging.Logger;
 
 public class Mapping extends RecursiveAction {
     String url;
-    CopyOnWriteArrayList<String> urlPool;//собираем все ссылки с текущей страницы
+    ConcurrentSkipListSet<String> urlPool;//собираем все ссылки с текущей страницы
     public static String constantPart;
 
-    public Mapping(CopyOnWriteArrayList<String> urlPool, String url) {
+    public Mapping(ConcurrentSkipListSet<String> urlPool, String url) {
         this.urlPool = urlPool;
         this.url = url;
     }
 
     @Override
     protected void compute() {
-        ArrayList<String> tempList;//временный список для переноса ссылок
+        ConcurrentSkipListSet<String> tempList;//временный список для переноса ссылок
         CopyOnWriteArrayList<Mapping> taskList = new CopyOnWriteArrayList<>();
         ParseHtml2 ph = new ParseHtml2();
         tempList = ph.getLinks(url, constantPart);//получаем все ссылки со страницы
