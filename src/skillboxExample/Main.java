@@ -9,6 +9,7 @@ import java.util.concurrent.ForkJoinPool;
 
 public class Main {
     public static void main(String[] args) {
+        //2124 секунд при static getLinc()
         String url = "https://skillbox.ru/";
 //        String url = "https://www.playback.ru";
 //        String pathToSiteMapFile = "data/playbackFromSkillbox.txt";

@@ -19,10 +19,10 @@ public class Mapping extends RecursiveAction {
 
     @Override
     protected void compute() {
-        ConcurrentSkipListSet<String> tempList;//временный список для переноса ссылок
+        ArrayList<String> tempList;//временный список для переноса ссылок
         CopyOnWriteArrayList<Mapping> taskList = new CopyOnWriteArrayList<>();
         ParseHtml2 ph = new ParseHtml2();
-        tempList = ph.getLinks(url, constantPart);
+        tempList = ph.getLinks(url, constantPart);//получаем все ссылки со страницы
         if (!urlPool.contains(url))
             urlPool.add(url);
         for (String urlChildren : tempList) {

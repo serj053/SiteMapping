@@ -8,6 +8,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 import static java.lang.Thread.sleep;
@@ -27,11 +28,11 @@ public class ParseHtml2 {
 
     //Позволяет безопасно выполнять операции вставки, удаления
     // и доступа к множеству одновременно несколькими потоками.
-    private static ConcurrentSkipListSet<String> links;
+    private  ArrayList<String> links;
 
     //реализуем метод который проверяет является ли строка URL
     //адресом внутри домена сайта
-    private static boolean isLink(String link, String constantPart) {
+    private  boolean isLink(String link, String constantPart) {
         //String regex = "http[s]?://[^#,\\s]*\\.?skillbox\\.ru[^#,\\s]*";//рабочий вариант - 59 минут 25585 строк(ссылок
         // String regex = "http[s]?://[^#,\\s]*\\.?playback\\.ru[^#,\\s]*";
         //String regex = "(?:https?):\\/\\/(\\w+:?\\w*)?(\\S+)(:\\d+)?(\\/|\\/([\\w#!:.?+=&%!\\-\\/]))?";//*
@@ -40,7 +41,7 @@ public class ParseHtml2 {
         return link.matches(regex);
     }
 
-    public static boolean isFile(String link) {
+    public  boolean isFile(String link) {
         return link.contains("jpg")
                 || link.contains(".jpeg")
                 || link.contains(".png")
@@ -60,8 +61,8 @@ public class ParseHtml2 {
     // потокобезопасную реализацию структуры данных "список уникальных элементов
     // отсортированных по возрастанию"
     //собираем все ссылки со страницы
-    public static ConcurrentSkipListSet<String> getLinks(String url, String constantPart) {
-        links = new ConcurrentSkipListSet<>();
+    public ArrayList<String> getLinks(String url, String constantPart) {
+        links = new ArrayList<>();
         try {
             sleep(150);//выдерживать паузы между потоками обращения к этому статическому методу
             // (с помощью метода sleep() у потока), (чтобы сайт не заблокировал доступ приложения ?)
