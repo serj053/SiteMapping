@@ -10,6 +10,7 @@ public class SiteMapRecursiveAction extends RecursiveAction {
     private SiteMap siteMap;//для текущей карты страницы
     //список посещенных сылок в текущей задаче
     private static CopyOnWriteArrayList<String> linksPool = new CopyOnWriteArrayList();
+    static String constantPart;
 
     public SiteMapRecursiveAction(SiteMap siteMap) {
         this.siteMap = siteMap;
@@ -21,7 +22,7 @@ public class SiteMapRecursiveAction extends RecursiveAction {
         if (!linksPool.contains(siteMap.getUrl()))
             linksPool.add(siteMap.getUrl());//добавляем первым адрес страницы (базовый url)
         //кладем все ссылки по адресу страницы в контейнер
-        ConcurrentSkipListSet<String> links = ParseHtml.getLinks(siteMap.getUrl());
+        ConcurrentSkipListSet<String> links = ParseHtml.getLinks(siteMap.getUrl(), constantPart);
         //если в контейнере для посещенных ссылок нет текущей ссылки то добавляем ее туда
         //и кладем все адреса соответствующие ссылкам в контейнер класса SiteMap
         for (String link : links) {

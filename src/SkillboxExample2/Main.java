@@ -11,14 +11,21 @@ public class Main {
         CopyOnWriteArrayList<String> urlPool = new CopyOnWriteArrayList<>();
         String url = "https://skillbox.ru";
         long start = System.currentTimeMillis();
+        Mapping.constantPart = getConstantPart(url);
         Mapping task = new Mapping(urlPool, url);
         fjp.invoke(task);
         long finish = System.currentTimeMillis() - start;
 
-        for(String urls: urlPool){
+        for (String urls : urlPool) {
             System.out.println(urls);
         }
-        System.out.println("* full time - " + finish/1000 + " секунд");
+        System.out.println("* full time - " + finish / 1000 + " секунд");
 
+    }
+
+    public static String getConstantPart(String url) {
+        int start = url.indexOf("//");
+        int end = url.indexOf(".ru");
+        return url.substring(start + 2, end);
     }
 }

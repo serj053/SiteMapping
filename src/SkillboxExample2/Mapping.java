@@ -2,6 +2,7 @@ package SkillboxExample2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.RecursiveAction;
 import java.util.logging.Logger;
@@ -9,6 +10,7 @@ import java.util.logging.Logger;
 public class Mapping extends RecursiveAction {
     String url;
     CopyOnWriteArrayList<String> urlPool;//собираем все ссылки с текущей страницы
+    public static String constantPart;
 
     public Mapping(CopyOnWriteArrayList<String> urlPool, String url) {
         this.urlPool = urlPool;
@@ -17,10 +19,10 @@ public class Mapping extends RecursiveAction {
 
     @Override
     protected void compute() {
-        CopyOnWriteArrayList<String> tempList;//временный список для переноса ссылок
+        ConcurrentSkipListSet<String> tempList;//временный список для переноса ссылок
         CopyOnWriteArrayList<Mapping> taskList = new CopyOnWriteArrayList<>();
-        ParseHtml ph = new ParseHtml();
-        tempList = ph.getLinks(url);
+        ParseHtml2 ph = new ParseHtml2();
+        tempList = ph.getLinks(url, constantPart);
         if (!urlPool.contains(url))
             urlPool.add(url);
         for (String urlChildren : tempList) {

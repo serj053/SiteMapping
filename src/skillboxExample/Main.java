@@ -10,9 +10,14 @@ import java.util.concurrent.ForkJoinPool;
 public class Main {
     public static void main(String[] args) {
         String url = "https://skillbox.ru/";
-        String pathToSiteMapFile = "data/siteMap.txt";
 //        String url = "https://www.playback.ru";
 //        String pathToSiteMapFile = "data/playbackFromSkillbox.txt";
+        String pathToSiteMapFile = "data/siteMap.txt";
+        int strt = url.indexOf("//");
+        int end = url.indexOf(".ru");
+
+        SiteMapRecursiveAction.constantPart = url.substring(strt + 2, end);
+
         long start = System.currentTimeMillis();
         //создаем пустой контейнер
         SiteMap siteMap = new SiteMap(url);
@@ -29,7 +34,7 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        String siteMapFile = createSiteMapString(siteMap,0);
+        String siteMapFile = createSiteMapString(siteMap, 0);
 
         try {
             stream.write(siteMapFile.getBytes(StandardCharsets.UTF_8));
@@ -39,15 +44,19 @@ public class Main {
             throw new RuntimeException(e);
         }
         long finish = System.currentTimeMillis() - start;
-        System.out.println("* full time - " + finish/1000+ " sec");
+        System.out.println("* full time - " + finish / 1000 + " sec");
 
     }
 
-    public static String createSiteMapString(SiteMap siteMap, int indent){
-        String tab = String.join("", Collections.nCopies(indent,"\t" ));
+    public static String createSiteMapString(SiteMap siteMap, int indent) {
+        String tab = String.join("", Collections.nCopies(indent, "\t"));
         StringBuilder result = new StringBuilder(tab + siteMap.getUrl());
-        siteMap.getSiteMapChildrens().forEach(child->result.append("\n")
-                .append(createSiteMapString(child, indent +1)));
+        siteMap.getSiteMapChildrens().forEach(child -> result.append("\n")
+                .append(createSiteMapString(child, indent + 1)));
         return result.toString();
+    }
+
+    public static String getConstantPartOfUrl(String url) {
+        return "";
     }
 }
