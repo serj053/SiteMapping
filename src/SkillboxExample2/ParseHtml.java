@@ -9,25 +9,26 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Logger;
 
 public class ParseHtml {
-    public CopyOnWriteArrayList<String> getLinks(String url) {
+    public ConcurrentSkipListSet<String> getLinks(String url, String constantPart) {
         //String reg = "^(https?|ftp|file)://[-a-zA-Z0-9+&@/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
         //String reg = "http[s]?://[^#,\\s]*\\.?skillbox\\.ru[^#,\\s]*";15872
-        String reg = "http[s]?://skillbox\\.ru[^#,\\s]*";
+        String reg = "http[s]?://"+constantPart+"\\.ru[^#,\\s]*";
         //String reg =  "(http|ftp|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-])";
         //String reg = "(?:https?):\\/\\/(\\w+:?\\w*)?(\\S+)(:\\d+)?(\\/|\\/([\\w#!:.?+=&%!\\-\\/]))?";
         //String reg = "(?:https?):\\/\\/(\\w+:?\\w*)?(\\S+)(:\\d+)?(\\/|\\/([\\w#!:.?+=&%!\\-\\/]))?";
         //String reg = "http[s]?://?skillbox\\.ru[^#,\\s]*";
         //String reg = "http[s]?://skillbox\\.ru[^#,\\s]*";
         try {
-            Thread.sleep(200);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        CopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>();
+        ConcurrentSkipListSet<String> list = new ConcurrentSkipListSet<>();
         Connection connect = Jsoup.connect(url)
                 .ignoreHttpErrors(true)//игнорировать ошибки HTTP
                 .ignoreContentType(true)
