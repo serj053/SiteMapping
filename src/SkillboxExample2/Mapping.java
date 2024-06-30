@@ -27,7 +27,7 @@ public class Mapping extends RecursiveAction {
             urlPool.add(url);
         for (String urlChildren : tempList) {
             if (!urlPool.contains(urlChildren)) {
-                urlPool.add(urlChildren);
+                urlPool.add(urlChildren);//сдесь можно использовать базу - записать текст
                 Mapping task = new Mapping(urlPool, urlChildren);
                 task.fork();
                 taskList.add(task);
