@@ -23,8 +23,7 @@ public class Mapping extends RecursiveAction {
         CopyOnWriteArrayList<Mapping> taskList = new CopyOnWriteArrayList<>();
         ParseHtml2 ph = new ParseHtml2();
         tempList = ph.getLinks(url, constantPart);//получаем все ссылки со страницы
-        if (!urlPool.contains(url))
-            urlPool.add(url);
+        urlPool.add(url);
         for (String urlChildren : tempList) {
             if (!urlPool.contains(urlChildren)) {
                 urlPool.add(urlChildren);//здесь можно использовать базу - записать текст
